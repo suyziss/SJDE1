@@ -55,10 +55,14 @@ func _place_control(b: Control,key: String) -> void:
     var p: Vector2 = positions[key]
     if key in ["left","right"]:
         b.anchor_left = 0.0
+        b.anchor_right = 0.0
         b.anchor_top = 1.0
+        b.anchor_bottom = 1.0
     else:
         b.anchor_left = 1.0
+        b.anchor_right = 1.0
         b.anchor_top = 1.0
+        b.anchor_bottom = 1.0
     b.position = p
     b.custom_minimum_size = Vector2(button_size,button_size)
     b.size = Vector2(button_size,button_size)
