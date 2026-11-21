@@ -1,0 +1,42 @@
+name: Build Android APK
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - '**.gd'
+      - '**.tscn'
+      - '**.tres'
+      - 'project.godot'
+      - 'export_presets.cfg'
+      - '.github/workflows/android-apk.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  build-apk:
+    runs-on: ubuntu-latest
+    container:
+      image: barichello/godot-ci:4.3.0
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Prepare build directory
+        run: mkdir -p build
+
+      - name: Import project resources
+        run: godot --headless --editor --path . --quit
+
+      - name: Export Android APK
+        run: godot --headless --path . --export-debug "Android" build/JDM_HORIZON.apk
+
+      - name: Upload APK artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: JDM-HORIZON-Android-APK
+          path: build/JDM_HORIZON.apk
+          if-no-files-found: error
+          retention-days: 14
