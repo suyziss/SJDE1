@@ -182,6 +182,7 @@ func _toggle_settings() -> void:
     close.text = "DONE"
     close.pressed.connect(func():
         _save_controls()
+        move_mode = false
         settings_panel.queue_free()
         settings_panel = null
     )
