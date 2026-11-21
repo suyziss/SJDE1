@@ -21,10 +21,10 @@ func _ready() -> void:
     _build_camera()
 func _input(event: InputEvent) -> void:
     var w = get_viewport().get_visible_rect().size.x
-    if event is InputEventScreenDrag and event.position.x > w * 0.32:
+    if event is InputEventScreenDrag and event.position.x > w * 0.32 and (not drive_enabled or event.position.y < get_viewport().get_visible_rect().size.y * 0.68):
         _rotate_camera(event.relative)
     elif event is InputEventMouseButton and event.button_index == MOUSE_BUTTON_LEFT:
-        _mouse_look = event.pressed and event.position.x > w * 0.32
+        _mouse_look = event.pressed and event.position.x > w * 0.32 and (not drive_enabled or event.position.y < get_viewport().get_visible_rect().size.y * 0.68)
     elif event is InputEventMouseMotion and _mouse_look:
         _rotate_camera(event.relative)
 func _rotate_camera(relative: Vector2) -> void:
